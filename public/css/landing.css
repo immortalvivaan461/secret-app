@@ -1,0 +1,89 @@
+body{
+    background-color: antiquewhite;
+}
+.jumbotron{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: antiquewhite;
+    margin-top: 15vh;
+    height: 70vh;
+}
+
+ul{
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+}
+
+.login-header , .register-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3vh;
+}
+
+#login-box{
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.login-card{
+    border: 2px solid gray;
+    padding: 4vw;
+    border-radius: 10px;
+}
+
+form{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    font-family: cursive;
+    font-size: clamp(.75rem, 2.5vw, 1.25rem);
+}
+
+#register-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.register-card {
+    border: 2px solid gray;
+    padding: 3vw;
+    border-radius: 10px;
+}
+
+.secret-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: 1px solid grey;
+}
+.data-box{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+}
+.datas{
+    background-color: rgb(246, 235, 220);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-left: 2px solid gray;
+    border-top: 1px solid gray;
+    box-shadow: 2px 2px 2px gray;
+    border-radius: 4px;
+}
+
+#secret-img{
+    width: 40%;
+}

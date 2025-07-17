@@ -1,0 +1,43 @@
+<%- include("includes/header.ejs") %>
+
+    <body>
+        <div class="container-fluid register-header">
+            <h1>Create Your Account – Share Secrets Safely</h1>
+            <p>Join our secure community. We keep your secrets encrypted and your data protected.</p>
+        </div>
+
+        <div id="register-box">
+            <div class="register-card">
+                <h1 class="heading">Register</h1>
+                <form method="post" action="/register/newuser">
+                    <label for="Fname">First Name:</label>
+                    <input name="Fname" type="text" id="Fname" placeholder="Enter First Name" required>
+
+                    <label for="Lname">Last Name:</label>
+                    <input name="Lname" type="text" id="Lname" placeholder="Enter Last Name">
+
+                    <label for="email">Email:</label>
+                    <input name="email" type="email" id="email" placeholder="abc123@gmail.com" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" placeholder="Abc123@" minlength="8" maxlength="15"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$"
+                        title="Password must be 8-15 characters long and include uppercase, lowercase, number, and special character"
+                        name="password"
+                        required>
+                    <button id="togglePassword">Show</button>
+
+                    <label for="re-password">Confirm Password:</label>
+                    <input type="password" id="re-password" placeholder="Abc123@" required>
+                    <p id="msg"></p>
+                    <input type="submit" value="Submit" id="submitbtn">
+                </form>
+                <a href="/login">Already have Account</a>
+            </div>
+
+        </div>
+       <script src="/js/register.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    </body>
+
+    </html>

@@ -1,0 +1,42 @@
+<%- include("includes/header.ejs") %>
+
+    <body>
+        <div class="container-fluid login-header">
+            <h1>Login to Your Secrets Vault</h1>
+            <p>Welcome back! Access your protected space with confidence.</p>
+        </div>
+
+        <div id="login-box">
+            <div class="login-card">
+                <h1 class="heading">Log-In/Sign-Up</h1>
+                <% if (error) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                    <% } %>
+
+                <form method="POST" action="/login/user">
+                    <label for="email">Email:</label>
+                    <input name="email" type="email" id="email" placeholder="abc123@gmail.com" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" placeholder="Abc123@" minlength="8" maxlength="15"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,15}$"
+                        title="Password must be 8-15 characters long and include uppercase, lowercase, number, and special character"
+                        name="password"
+                        required>
+                    <button type="button" id="togglePassword">Show</button>
+
+                    <p id="msg"></p>
+                    <input type="submit" value="Submit" id="submitbtn">
+                </form>
+                <a href="/register">Don't have an Account</a>
+            </div>
+
+        </div>
+
+        <script src="/js/login.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    </body>
+
+    </html>
