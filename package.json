@@ -8,6 +8,9 @@
   "author": "vivaan",
   "license": "ISC",
   "description": "",
+  "scripts": {
+  "start": "node app.js"
+   },
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^5.1.0",
