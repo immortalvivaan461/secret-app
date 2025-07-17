@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+//for render
+require('dotenv').config();
+
 
 const session = require("express-session");//for session creation
 app.use(session({
