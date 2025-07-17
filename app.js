@@ -4,7 +4,7 @@ const app = express();
 require('dotenv').config();
 
 
-const session = require("express-session");//for session creation
+const sessionSecret = process.env.SESSION_SECRET;//for session creation
 app.use(session({
     secret: "ifsomeoneknowsthennomoresecret",
     resave: false,
@@ -36,7 +36,7 @@ main()
     .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/userdata');
+    await mongoose.connect(process.env.MONGO_URL);
 
 }
 
