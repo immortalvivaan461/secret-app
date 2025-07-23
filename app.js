@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+const bcrypt = require("bcrypt");
+
 const session = require("express-session");//for session creation
 app.use(session({
     secret: "ifsomeoneknowsthennomoresecret",
@@ -37,11 +39,54 @@ async function main() {
 
 }
 
+app.get("/logout", (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+            return res.send("Error logging out.");
+        }
+        res.clearCookie("connect.sid"); // default cookie name used by express-session
+        res.redirect("/login");
+    });
+});
+
+
+app.post("/update", async (req, res) => {
+    if (!req.session.user) return res.redirect("/login");
+
+    const { Fname, Lname, email, password } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const updatedUser = await USER.findByIdAndUpdate(
+            req.session.user._id || req.session.user,
+            { Fname, Lname, email, password: hashedPassword },  // replace with hashed password if using bcrypt
+            { new: true }
+        );
+
+        req.session.user = updatedUser; // update session with latest user info
+        req.session.success = "Profile updated successfully!";
+        res.redirect("/secret");
+    } catch (err) {
+        console.log(err);
+        req.session.error = "Error updating profile!";
+        res.redirect("/secret");
+    }
+});
+
+
+
 app.get("/secret", (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     }
-    res.render("secret.ejs", { usrdata: req.session.user });
+    // Read & clear messages
+    const success = req.session.success;
+    const error = req.session.error;
+    req.session.success = null;
+    req.session.error = null;
+
+    res.render("secret.ejs", { usrdata: req.session.user , success , error });
 });
 
 
@@ -54,39 +99,30 @@ app.post("/login/user", async (req, res) => {
     if (!usrdata) {
         // User not found
         return res.render("login.ejs", { error: "User not found" });
+    } 
+    const isMatch = await bcrypt.compare(pass, usrdata.password);
+
+    if (isMatch) {
+        req.session.user = usrdata;
+        return res.redirect("/secret");
     } else {
-        if (pass === usrdata.password) {
-            // Successful login and save the session
-            req.session.user = usrdata;
-            return res.redirect("/secret");
-        } else {
-            // Password incorrect
-            return res.render("login.ejs", { error: "Incorrect password" });
-        }
+        return res.render("login.ejs", { error: "Incorrect password" });
     }
 });
 
-app.get("/logout", (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return res.send("Error logging out");
-        }
-        res.redirect("/");
-    });
-});
 
 
-
-app.post("/register/newuser",( req, res) =>{
+app.post("/register/newuser", async ( req, res) =>{
     const {Fname , Lname , email ,password} = req.body;
+    const hashedPassword = await bcrypt.hash(password, 12);
     let newusr = new USER({
         Fname: Fname,
         Lname: Lname,
         email: email,
-        password: password
+        password: hashedPassword
     })
     
-    newusr.save().then((res) =>{
+    await newusr.save().then((res) =>{
         console.log(res)
     })
     .catch(err =>{

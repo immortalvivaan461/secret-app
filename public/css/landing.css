@@ -57,33 +57,3 @@ form{
     padding: 3vw;
     border-radius: 10px;
 }
-
-.secret-header{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-bottom: 1px solid grey;
-}
-.data-box{
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    flex-direction: column;
-}
-.datas{
-    background-color: rgb(246, 235, 220);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-left: 2px solid gray;
-    border-top: 1px solid gray;
-    box-shadow: 2px 2px 2px gray;
-    border-radius: 4px;
-}
-
-#secret-img{
-    width: 40%;
-}
