@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 
+require("dotenv").config();
+await mongoose.connect(process.env.MONGO_URI);
+
 const bcrypt = require("bcrypt");
 
 const session = require("express-session");//for session creation
@@ -21,7 +24,8 @@ const USER = require("./models/user.js")
 
 const path = require("path");
 const { error } = require("console");
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
+
 
 app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "views"));
