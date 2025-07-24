@@ -4,7 +4,7 @@ A simple user authentication system built with **Node.js**, **Express**, **Mongo
 
 ## 🚀 Live Demo
 
-👉 [https://secret-app.onrender.com](https://secret-app.onrender.com)
+👉 https://secret-app-final.onrender.com/
 
 ---
 
