@@ -103,7 +103,3 @@ cd secret-app
 npm install
 npm start
 Visit http://localhost:8000 in your browser.
-
-
-## 🚀 Live Demo
-https://secret-app-final.onrender.com/
