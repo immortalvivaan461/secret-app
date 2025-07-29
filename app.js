@@ -80,23 +80,46 @@ app.post("/login/user", async (req, res) => {
 // });
 
 
+// app.post("/newsecret", async (req, res) => {
+//     if (!req.session.user) return res.redirect("/login");
+
+//     const secretText = req.body.secret;
+
+//     try {
+//         const user = await USER.findById(req.session.user._id);
+//         user.secrets.push(secretText);
+//         await user.save();
+
+//         req.session.user = user; // Update session with latest user
+//         res.redirect("/secret");
+//     } catch (err) {
+//         console.log(err);
+//         res.send("Error saving secret.");
+//     }
+// });
+
 app.post("/newsecret", async (req, res) => {
     if (!req.session.user) return res.redirect("/login");
 
-    const secretText = req.body.secret;
+    const secretText = req.body.secret?.trim();
+    if (!secretText) {
+        req.session.error = "Secret cannot be empty!";
+        return res.redirect("/secret");
+    }
 
     try {
         const user = await USER.findById(req.session.user._id);
-        user.secrets.push(secretText);
+        user.secrets.push({ content: secretText }); // changed
         await user.save();
 
-        req.session.user = user; // Update session with latest user
+        req.session.user = user;
         res.redirect("/secret");
     } catch (err) {
         console.log(err);
         res.send("Error saving secret.");
     }
 });
+
 
 app.get("/secret", async (req, res) => {
     if (!req.session.user) {
