@@ -98,6 +98,22 @@ app.post("/login/user", async (req, res) => {
 //     }
 // });
 
+app.get("/editsecret/:sid", async (req, res) => {
+    if (!req.session.user) return res.redirect("/login");
+
+    const { sid } = req.params;
+    const user = await USER.findById(req.session.user._id);
+    const secretToEdit = user.secrets.find(s => s.sid.toString() === sid);
+
+    if (!secretToEdit) {
+        req.session.error = "Secret not found or unauthorized!";
+        return res.redirect("/secret");
+    }
+
+    res.render("editSecret.ejs", { secret: secretToEdit, sid });
+});
+
+
 app.post("/newsecret", async (req, res) => {
     if (!req.session.user) return res.redirect("/login");
 
