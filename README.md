@@ -2,6 +2,58 @@
 
 A simple user authentication system built with **Node.js**, **Express**, **MongoDB**, and **EJS**. It allows users to register, login, update their profile, and access a protected page (`/secret`) using session-based authentication.
 
+
+✨ Features
+🔐 User Authentication
+
+Sign up and log in securely with encrypted passwords.
+
+Session-based authentication to keep users logged in.
+
+🧑‍💼 User Profile
+
+View personal details: name, email, and secure user ID.
+
+Edit profile information and update password with validation.
+
+🗝️ Post Secrets Anonymously
+
+Users can share secrets without revealing their identity to others.
+
+All secrets are visible to logged-in users.
+
+✏️ Edit Own Secrets
+
+Inline editing of posted secrets directly in the list.
+
+Toggle between view and edit mode seamlessly.
+
+🚫 Validation
+
+Empty secrets are automatically filtered and not displayed.
+
+Passwords must meet security requirements (length, character types).
+
+🌐 Responsive Design
+
+Mobile-friendly interface with styled UI (Bootstrap or custom CSS).
+
+Clean layout for both profile and secret sharing.
+
+🔒 Access Control
+
+Edit buttons and forms are only available to the secret's owner.
+
+Other users can read but not modify or delete secrets.
+
+📂 Database Integration
+
+MongoDB stores users and their secrets with unique IDs.
+
+Seamless interaction using Mongoose.
+
+
+
 ## 🚀 Live Demo
 
 👉 https://secret-app-final.onrender.com/
@@ -52,17 +104,6 @@ npm install
 npm start
 Visit http://localhost:8000 in your browser.
 
-
-✍️ Features
-Register new users
-
-Login with secure password verification
-
-Session-based authentication
-
-Profile update route
-
-Protected route /secret
 
 ## 🚀 Live Demo
 https://secret-app-final.onrender.com/
