@@ -17,9 +17,9 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     secrets: [{
-    _id: false,
-    sid: { type: mongoose.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
-    content: String
+  _id: false,
+  sid: { type: mongoose.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+  content: String
 }]
 
 })
