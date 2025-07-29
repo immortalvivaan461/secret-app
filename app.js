@@ -127,10 +127,10 @@ app.post("/editsecret/:sid", async (req, res) => {
         //     return res.redirect("/secret");
         // }
         const secret = user.secrets.find(s => s.sid.toString() === sid);
-    if (!secret) {
-    req.session.error = "Secret not found or unauthorized.";
-    return res.redirect("/secret");
-}
+        if (!secret) {
+        req.session.error = "Secret not found or unauthorized.";
+        return res.redirect("/secret");
+        }
 
         secret.content = content;
         await user.save();
