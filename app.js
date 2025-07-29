@@ -70,14 +70,53 @@ app.post("/login/user", async (req, res) => {
     }
 });
 
-app.get("/secret", (req, res) => {
+// app.get("/secret", (req, res) => {
+//     if (!req.session.user) return res.redirect("/login");
+//     const success = req.session.success;
+//     const error = req.session.error;
+//     req.session.success = null;
+//     req.session.error = null;
+//     res.render("secret.ejs", { usrdata: req.session.user, success, error });
+// });
+
+
+app.post("/newsecret", async (req, res) => {
     if (!req.session.user) return res.redirect("/login");
+
+    const secretText = req.body.secret;
+
+    try {
+        const user = await USER.findById(req.session.user._id);
+        user.secrets.push(secretText);
+        await user.save();
+
+        req.session.user = user; // Update session with latest user
+        res.redirect("/secret");
+    } catch (err) {
+        console.log(err);
+        res.send("Error saving secret.");
+    }
+});
+
+app.get("/secret", async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    const allUsers = await USER.find({ secrets: { $exists: true, $ne: [] } });
+
+    const allSecrets = allUsers.flatMap(user => user.secrets);
+
+    // Read & clear messages
     const success = req.session.success;
     const error = req.session.error;
     req.session.success = null;
     req.session.error = null;
-    res.render("secret.ejs", { usrdata: req.session.user, success, error });
+
+    res.render("secret.ejs", { usrdata: req.session.user , success , error , allSecrets });
 });
+
+
 
 app.post("/update", async (req, res) => {
     if (!req.session.user) return res.redirect("/login");
