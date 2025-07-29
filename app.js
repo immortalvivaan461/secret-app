@@ -98,20 +98,20 @@ app.post("/login/user", async (req, res) => {
 //     }
 // });
 
-app.get("/editsecret/:sid", async (req, res) => {
-    if (!req.session.user) return res.redirect("/login");
+// app.get("/editsecret/:sid", async (req, res) => {
+//     if (!req.session.user) return res.redirect("/login");
 
-    const { sid } = req.params;
-    const user = await USER.findById(req.session.user._id);
-    const secretToEdit = user.secrets.find(s => s.sid.toString() === sid);
+//     const { sid } = req.params;
+//     const user = await USER.findById(req.session.user._id);
+//     const secretToEdit = user.secrets.find(s => s.sid.toString() === sid);
 
-    if (!secretToEdit) {
-        req.session.error = "Secret not found or unauthorized!";
-        return res.redirect("/secret");
-    }
+//     if (!secretToEdit) {
+//         req.session.error = "Secret not found or unauthorized!";
+//         return res.redirect("/secret");
+//     }
 
-    res.render("editSecret.ejs", { secret: secretToEdit, sid });
-});
+//     res.render("editSecret.ejs", { secret: secretToEdit, sid });
+// });
 
 
 app.post("/newsecret", async (req, res) => {
@@ -136,24 +136,46 @@ app.post("/newsecret", async (req, res) => {
     }
 });
 
-
 app.get("/secret", async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect("/login");
-    }
+    if (!req.session.user) return res.redirect("/login");
 
-    const allUsers = await USER.find({ secrets: { $exists: true, $ne: [] } });
+    const allUsers = await USER.find({ "secrets.0": { $exists: true } });
+    const allSecrets = allUsers.flatMap(user =>
+        user.secrets.map(s => ({
+            sid: s.sid,
+            content: s.content,
+            ownerId: user._id.toString()
+        }))
+    );
 
-    const allSecrets = allUsers.flatMap(user => user.secrets);
-
-    // Read & clear messages
-    const success = req.session.success;
-    const error = req.session.error;
+    res.render("secret.ejs", {
+        usrdata: req.session.user,
+        allSecrets,
+        success: req.session.success,
+        error: req.session.error
+    });
     req.session.success = null;
     req.session.error = null;
-
-    res.render("secret.ejs", { usrdata: req.session.user , success , error , allSecrets });
 });
+
+
+// app.get("/secret", async (req, res) => {
+//     if (!req.session.user) {
+//         return res.redirect("/login");
+//     }
+
+//     const allUsers = await USER.find({ secrets: { $exists: true, $ne: [] } });
+
+//     const allSecrets = allUsers.flatMap(user => user.secrets);
+
+//     // Read & clear messages
+//     const success = req.session.success;
+//     const error = req.session.error;
+//     req.session.success = null;
+//     req.session.error = null;
+
+//     res.render("secret.ejs", { usrdata: req.session.user , success , error , allSecrets });
+// });
 
 
 
