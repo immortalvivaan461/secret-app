@@ -14,3 +14,12 @@ function toggleEdit(sid) {
       contentDiv.style.display = "block";
     }
   }
+
+document.querySelectorAll('.edit-form').forEach(form => {
+  form.addEventListener('submit', function () {
+    const button = this.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.innerText = "Saving...";
+  });
+});
+
