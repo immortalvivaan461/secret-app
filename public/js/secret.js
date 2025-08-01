@@ -1,10 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Ensure all edit forms are hidden on load
   document.querySelectorAll(".edit-form").forEach(form => {
     form.style.display = "none";
   });
 
-  // Disable submit button while saving
   document.querySelectorAll('.edit-form').forEach(form => {
     form.addEventListener('submit', function () {
       const button = this.querySelector('button[type="submit"]');
