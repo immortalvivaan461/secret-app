@@ -115,7 +115,38 @@ app.post("/login/user", async (req, res) => {
 //     res.render("editSecret.ejs", { secret: secretToEdit, sid });
 // });
 
-app.post("/editsecret/:sid", async (req, res) => {
+// app.post("/editsecret/:sid", async (req, res) => {
+//     if (!req.session.user) return res.redirect("/login");
+
+//     const { sid } = req.params;
+//     const { content } = req.body;
+
+//     try {
+//         const user = await USER.findById(req.session.user._id);
+//         // const secret = user.secrets.find(s => s.sid.toString() === sid);
+//         // if (!secret) {
+//         //     req.session.error = "Secret not found.";
+//         //     return res.redirect("/secret");
+//         // }
+//         const secret = user.secrets.find(s => s.sid.toString() === sid);
+//         if (!secret) {
+//         req.session.error = "Secret not found or unauthorized.";
+//         return res.redirect("/secret");
+//         }
+
+//         secret.content = content;
+//         await user.save();
+
+//         req.session.success = "Secret updated successfully.";
+//         res.redirect("/secret");
+//     } catch (err) {
+//         console.log(err);
+//         req.session.error = "Failed to update secret.";
+//         res.redirect("/secret");
+//     }
+// });
+
+app.put("/secret/:sid", async (req, res) => {
     if (!req.session.user) return res.redirect("/login");
 
     const { sid } = req.params;
@@ -123,15 +154,10 @@ app.post("/editsecret/:sid", async (req, res) => {
 
     try {
         const user = await USER.findById(req.session.user._id);
-        // const secret = user.secrets.find(s => s.sid.toString() === sid);
-        // if (!secret) {
-        //     req.session.error = "Secret not found.";
-        //     return res.redirect("/secret");
-        // }
         const secret = user.secrets.find(s => s.sid.toString() === sid);
         if (!secret) {
-        req.session.error = "Secret not found or unauthorized.";
-        return res.redirect("/secret");
+            req.session.error = "Secret not found or unauthorized.";
+            return res.redirect("/secret");
         }
 
         secret.content = content;
