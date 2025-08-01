@@ -3,17 +3,21 @@ function toggleEditForm() {
     form.style.display = (form.style.display === "none") ? "block" : "none";
 }
 
+
 function toggleEdit(sid) {
     const form = document.getElementById(`edit-form-${sid}`);
     const contentDiv = document.getElementById(`content-${sid}`);
-    if (form.style.display === "none") {
-      form.style.display = "block";
-      contentDiv.style.display = "none";
+
+    if (!form || !contentDiv) return;
+
+    if (form.style.display === "none" || form.style.display === "") {
+        form.style.display = "block";
+        contentDiv.style.display = "none";
     } else {
-      form.style.display = "none";
-      contentDiv.style.display = "block";
+        form.style.display = "none";
+        contentDiv.style.display = "block";
     }
-  }
+}
 
 document.querySelectorAll('.edit-form').forEach(form => {
   form.addEventListener('submit', function () {
@@ -22,4 +26,3 @@ document.querySelectorAll('.edit-form').forEach(form => {
     button.innerText = "Saving...";
   });
 });
-
