@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const methodOverride = require('method-override');
 const path = require("path");
 require("dotenv").config();
 
@@ -22,6 +23,7 @@ app.use(session({
 }));
 
 // Middleware and View Engine
+app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
