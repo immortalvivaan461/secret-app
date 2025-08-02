@@ -86,16 +86,6 @@ Seamless interaction using Mongoose.
 └── .env
 
 
----
-
-## ⚙️ Environment Variables
-
-Create a `.env` file and add your MongoDB URI:
-
-...env
-MONGODB_URI=mongodb+srv://todo-user:Vivaan%40461@cluster0.scv4j7i.mongodb.net/secretAppDB?retryWrites=true&w=majority
-
-
 
 🧪 Running Locally
 git clone https://github.com/immortalvivaan461/secret-app.git
